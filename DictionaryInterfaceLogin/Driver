@@ -1,0 +1,117 @@
+package shussain;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Scanner;
+
+import javax.imageio.ImageIO;
+
+public class Driver {
+
+	static String user;
+	static String password;
+	static Scanner input = new Scanner(System.in);	
+	public static void main(String[] args) throws NoSuchAlgorithmException {
+		OurDictionary<String, String> login = new OurDictionary<>();
+		adding(login);
+		System.out.println("Hello, welcome to the program!!! ");
+		System.out.println("");
+		System.out.println("Press L(Login) or S(Signup): ");
+		String ans = input.nextLine();
+				ans = ans.toLowerCase();
+		if(ans.equals("s")) 
+		{
+			addnewuser(login);
+		}
+		System.out.println("In order to login, enter the following:  ");
+		System.out.println(" ");	
+		username(login);
+	}
+	private static void addnewuser(OurDictionary<String, String> login) throws NoSuchAlgorithmException {
+			System.out.println("Username: ");
+			user = input.nextLine();
+			System.out.println("Password: ");
+			password = input.nextLine();
+			System.out.println("Confirm the password:  ");
+			password = input.nextLine();
+			login.add(user,bytes_hex(createSeacureHash(password)));
+	}
+	private static void adding(OurDictionary<String, String> login) throws NoSuchAlgorithmException {
+		login.add("shussain", bytes_hex(createSeacureHash("sarim")));
+		login.add("ljames", bytes_hex(createSeacureHash("lebron")));
+		login.add("adavis", bytes_hex(createSeacureHash("anthony")));
+		login.add("lball", bytes_hex(createSeacureHash("lonzo")));
+		login.add("scurry", bytes_hex(createSeacureHash("curry")));
+		login.add("jharden", bytes_hex(createSeacureHash("james")));
+		login.add("dhoward", bytes_hex(createSeacureHash("dwight")));
+		login.add("lmessi", bytes_hex(createSeacureHash("messi")));
+		login.add("cronaldo", bytes_hex(createSeacureHash("ronaldo")));
+		login.add("drose", bytes_hex(createSeacureHash("rose")));
+	}
+	private static boolean username(OurDictionary<String, String> login) throws NoSuchAlgorithmException {
+		boolean result=false;
+		boolean found;
+		for(int i = 0; i <=2; i++) 
+		{
+		System.out.println("Username: ");
+		user = input.nextLine();
+		if(login.contains(user)) 
+		{
+			password(login, user);
+			break;
+		}else 
+		{
+			System.out.println("Username not avalaible!!!");
+			System.out.println(" ");
+		}
+		
+		}
+		System.out.println(" ");
+		return result;
+	}
+	private static void password(OurDictionary<String, String> login, String user2) throws NoSuchAlgorithmException {
+		
+		System.out.println("Enter the password: ");	
+		password = input.nextLine();
+		byte[] get_hash = createSeacureHash(password);
+		String hex = bytes_hex(get_hash);
+			
+			String value = login.getValue(user2);
+			if(value == null) 
+			{
+				System.out.println("Welcome");
+			} 
+			else if(hex.equals(value)) 
+			{
+				System.out.println(" ");
+				System.out.println("You have successfully logged in!!! ");
+				
+			}else 
+			{
+				System.out.println("Incorrect Password!!! ");
+			}	
+	}
+	private static String bytes_hex(byte[] get_hash) {
+		StringBuffer hexHash = new StringBuffer();
+		for(int i =0; i <get_hash.length; i++) 
+		{
+			String hexChar = Integer.toHexString(0xFF & get_hash[i]);
+			if(hexChar.length() ==1) 
+			{
+				hexHash.append('0');
+			}
+			hexHash.append(hexChar);
+		}
+		return hexHash.toString();
+	}
+	private static byte[] createSeacureHash(String password2) throws NoSuchAlgorithmException {
+			MessageDigest myDigest =MessageDigest.getInstance("SHA-512");
+			myDigest.update(password2.getBytes());
+			byte[] hashCode = myDigest.digest();
+			return hashCode;
+	}
+
+}
