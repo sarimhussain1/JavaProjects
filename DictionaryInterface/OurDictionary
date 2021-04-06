@@ -1,0 +1,98 @@
+package shussain;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class OurDictionary<K, V> implements DictionaryInterface<K, V>
+{
+	private List<K> keys;
+	private List<V> values;
+	public OurDictionary()
+	{
+		keys = new ArrayList<>();
+		values = new ArrayList<>();	
+	}
+	public OurDictionary(int initialCapacity)
+	{
+		keys = new ArrayList<>(initialCapacity);
+		values = new ArrayList<>(initialCapacity);
+	}
+	@Override
+	public V add(K key, V value)
+	{
+		if((key == null) || (value == null))
+		{
+			throw new IllegalArgumentException("Cannot add null to the dictionary.");
+		}
+		else
+		{
+			V result = null;
+			int keyIndex = keys.indexOf(key);
+			if((keyIndex > -1) && keyIndex < keys.size())
+			{
+				result = values.set(keyIndex, value);
+			}
+			else
+			{
+				keys.add(key);
+				values.add(value);
+			}
+			return result;
+		}
+	}
+	@Override
+	public V remove(K key) 
+	{
+		V result = null;
+		int keyIndex = keys.indexOf(key);	
+		if((keyIndex > -1) && keyIndex < keys.size())
+		{
+			keys.remove(keyIndex);
+			result = values.remove(keyIndex);
+		}
+		return result;
+	}
+	@Override
+	public V getValue(K key) 
+	{
+		V result = null;
+		int keyIndex = keys.indexOf(key);
+		if((keyIndex > -1) && keyIndex < keys.size())
+		{
+			result = values.get(keyIndex);
+		}
+		return result;
+	}
+	@Override
+	public boolean contains(K key) 
+	{
+		return keys.contains(key);
+	}
+	@Override
+	public Iterator<K> getKeyIterator()
+	{
+		return keys.iterator();
+	}
+	@Override
+	public Iterator<V> getValueIterator() 
+	{
+		return values.iterator();
+	}
+	@Override
+	public boolean isEmpty() 
+	{
+		return keys.isEmpty() || values.isEmpty();
+	}
+	@Override
+	public int getSize() 
+	{
+		return keys.size();
+	}
+	@Override
+	public void clear() 
+	{
+		keys.clear();
+		values.clear();
+	}
+}
