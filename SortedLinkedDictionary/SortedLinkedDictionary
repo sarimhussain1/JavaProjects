@@ -1,0 +1,278 @@
+package shussain;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class SortedLinkedDictionary<K extends Comparable<? super K>, V>
+	implements DictionaryInterface<K, V>
+{
+	
+	private Node firstNode;
+	
+	private int numberOfEntries;
+	
+	public SortedLinkedDictionary()
+	{
+		firstNode = null;
+		numberOfEntries = 0;
+	}
+	
+	@Override
+	public V add(K key, V value) 
+	{
+		V result = null;
+		if(key == null || value == null)
+		{
+			throw new IllegalArgumentException("Cannot add null to dictionary.");
+		}
+		else
+		{
+			Node currentNode = firstNode;
+			Node nodeBefore = null;
+			
+			while((currentNode != null) && (key.compareTo(currentNode.getKey()) > 0))
+			{
+				nodeBefore = currentNode;
+				currentNode = currentNode.getNextNode();
+			}
+			
+			if((currentNode != null) && key.equals(currentNode.getKey()))
+			{
+				result = currentNode.getValue();
+				currentNode.setValue(value);
+			}
+		
+			else
+			{
+				Node newNode = new Node(key, value);
+				
+				if(nodeBefore == null)
+				{
+					newNode.setNextNode(firstNode);
+					firstNode = newNode;
+				}
+				else
+				{
+					newNode.setNextNode(currentNode);
+					nodeBefore.setNextNode(newNode);
+				}
+				numberOfEntries++;
+			}
+		}
+		
+		return result;
+	}
+
+	@Override
+	public V remove(K key)
+	{
+		V result = null;
+		if(!isEmpty())
+		{
+			Node currentNode = firstNode;
+			Node nodeBefore = null;
+			
+			while((currentNode != null) && (key.compareTo(currentNode.getKey()) > 0))
+			{
+				nodeBefore = currentNode;
+				currentNode = currentNode.getNextNode();
+			}
+			
+			if((currentNode != null) && key.equals(currentNode.getKey()))
+			{
+				Node nodeAfter = currentNode.getNextNode();
+				
+				if(nodeBefore == null)
+				{
+					firstNode = nodeAfter;
+				}
+				else
+				{
+					nodeBefore.setNextNode(nodeAfter);
+				}
+				
+				result = currentNode.getValue();
+				numberOfEntries--;
+			}
+		}
+		
+		return result;
+	}
+
+	@Override
+	public V getValue(K key)
+	{
+		V result = null;
+		if(!isEmpty())
+		{
+			Node currentNode = firstNode;
+			while((currentNode != null) && (key.compareTo(currentNode.getKey()) > 0))
+			{
+				currentNode = currentNode.getNextNode();
+			}
+			
+			if((currentNode != null) && key.equals(currentNode.getKey()))
+			{				
+				result = currentNode.getValue();
+			}
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean contains(K key)
+	{
+		boolean found = false;
+		Node currentNode = firstNode;
+
+		while((currentNode != null) && (key.compareTo(currentNode.getKey()) > 0))
+		{
+			currentNode = currentNode.getNextNode();
+			
+			if(key.compareTo(currentNode.getKey()) == 0)
+			{
+				found = true;
+			}
+		} 
+		return found;
+	}
+
+	@Override
+	public Iterator<K> getKeyIterator() 
+	{
+		return  new KeyIterator();
+	}
+
+	@Override
+	public Iterator<V> getValueIterator() 
+	{
+		return new ValueIterator();
+	}
+
+	@Override
+	public boolean isEmpty()
+	{
+		return numberOfEntries == 0;
+	}
+
+	@Override
+	public int getSize()
+	{
+		return numberOfEntries;
+	}
+
+	@Override
+	public void clear() 
+	{
+		firstNode = null;
+		numberOfEntries = 0;
+	}
+	
+	private class KeyIterator implements Iterator<K>
+	{
+		private Node nextNode;
+		private KeyIterator()
+		{
+			nextNode = firstNode;
+		}
+		
+		@Override
+		public boolean hasNext() 
+		{
+			return (nextNode != null);
+		}
+
+		@Override
+		public K next()
+		{
+			K result;
+			
+			if(hasNext())
+			{
+				result = nextNode.getKey();
+				nextNode = nextNode.getNextNode();
+			}
+			else
+			{
+				throw new NoSuchElementException();
+			}
+			
+			return result;
+		}
+	}
+	
+	private class ValueIterator implements Iterator<V>
+	{
+		private Node nextNode;
+		private ValueIterator()
+		{
+			nextNode = firstNode;
+		}
+		
+		@Override
+		public boolean hasNext() 
+		{
+			return (nextNode != null);
+		}
+
+		@Override
+		public V next()
+		{
+			V result;
+			
+			if(hasNext())
+			{
+				result = nextNode.getValue();
+				nextNode = nextNode.getNextNode();
+			}
+			else
+			{
+				throw new NoSuchElementException();
+			}
+			
+			return result;
+		}
+	}
+
+	private class Node
+	{
+		private K key;
+		private V value;
+		private Node nextNode;
+		
+		private Node(K searchKey, V dataValue)
+		{
+			key = searchKey;
+			value = dataValue;
+			nextNode = null;
+		}
+		
+		private Node(K searchKey, V dataValue, Node next)
+		{
+			key = searchKey;
+			value = dataValue;
+			nextNode = next;
+		}
+
+		private K getKey() {
+			return key;
+		}
+
+		private void setValue(V value) {
+			this.value = value;
+		}
+
+		private V getValue() {
+			return value;
+		}
+
+		private Node getNextNode() {
+			return nextNode;
+		}
+
+		private void setNextNode(Node nextNode) {
+			this.nextNode = nextNode;
+		}
+	}
+}
