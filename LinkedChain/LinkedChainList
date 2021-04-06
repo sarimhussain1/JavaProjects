@@ -1,0 +1,113 @@
+package shussain;
+
+public class LinkedChainList<T extends Comparable<? super T>> extends LinkedChainBase<T> implements ListInterface<T> 
+{
+	public LinkedChainList()
+	{
+		super();
+	}
+
+	@Override
+	public void add(T newEntry)
+	{
+		Node newNode = new Node(newEntry);
+		Node nodeBefore = getNodeBefore(newEntry);
+		if (nodeBefore == null) 
+		{
+			addFirstNode(newNode);
+		}
+		else
+		{
+			addAfterNode(nodeBefore, newEntry);
+		}
+	}
+
+	private Node getNodeBefore(T newEntry)
+	{
+		Node currentNode = (Node) getFirstNode();
+		Node nodeBefore = null;
+		while ((currentNode != null) && (newEntry.compareTo(currentNode.getData()) > 0))
+		{
+			nodeBefore = currentNode;
+			currentNode = currentNode.getNextNode();
+
+		} 
+		
+		return nodeBefore;
+	}
+
+	@Override
+	public void add(int newPosition, T newEntry)
+	{
+		Node beforeNode = getNodeAt(newPosition - 1);
+		if(newPosition >= 0 && newPosition <= getLength())
+		{
+			addAfterNode(beforeNode, newEntry);
+		}
+		else
+		{
+			throw new IndexOutOfBoundsException("Illegal position.");
+		}
+	}
+
+	@Override
+	public T remove(int givenPosition)
+	{
+		Node beforeNode = getNodeAt(givenPosition-1);
+		Node nodeToRemove = beforeNode.getNextNode();
+		if(givenPosition >0 && givenPosition <= getLength())
+		{
+			removeAfterNode(beforeNode);
+		}
+		else 
+		{
+			throw new IndexOutOfBoundsException("Illegal position.");
+		}
+		
+		return nodeToRemove.getData();
+	}
+
+	@Override
+	public T replace(int givenPosition, T newEntry) 
+	{
+		if((givenPosition >= 1) && (givenPosition < getLength()))
+		{
+			Node desiredNode = getNodeAt(givenPosition);
+			T originalEntry = desiredNode.getData();
+			desiredNode.setData(newEntry);
+			return originalEntry;
+		}
+		else
+		{
+			throw new IndexOutOfBoundsException("Illegal position.");
+		}
+	}
+
+	@Override
+	public T getEntry(int givenPosition)
+	{
+		Node currentNode = getNodeAt(givenPosition);
+		T entry = currentNode.getData();
+		return entry;
+	}
+
+	@Override
+	public boolean contains(T anEntry)
+	{
+		boolean found = false;
+		Node currentNode = getFirstNode();
+		 while (!found && (currentNode != null))
+	      {
+	         if (anEntry.equals(currentNode.getData()))
+	         {
+	        	 found = true;
+	         }
+	         else
+	         {
+	        	 currentNode = currentNode.getNextNode();
+	         }
+	      } 
+	      
+	      return found;
+	}
+}
