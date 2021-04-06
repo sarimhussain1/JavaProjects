@@ -1,0 +1,68 @@
+package shussain;
+
+import java.util.Iterator;
+
+public class Driver
+{
+	public static void main(String[] args) 
+	{
+		SortedLinkedDictionary<Name, String> phoneDirectory  = new SortedLinkedDictionary<>();
+		
+		System.out.println("Is the phone directory empty: " + phoneDirectory.isEmpty());
+		System.out.println("Contacts are being added!!!");
+		System.out.println(" ");
+		Name sarim = new Name("Sarim", "Hussain");
+		Name drake = new Name("Drake", "Bell");
+		Name lebron = new Name("Lebron", "James");
+		Name anthony = new Name("Anthony", "Davis");
+		Name lamelo = new Name("Lamelo", "Ball");
+		Name lonzo = new Name("Lonzo", "Ball");
+		Name gelo = new Name("Gelo", "Ball");
+		Name victor = new Name("Victor", "Olidipo");
+		Name jimmy = new Name("Jimmy", "Butler");
+		Name derrick = new Name("Derrick", "Rose");
+		
+		phoneDirectory.add(sarim, "123-345-2343");
+		phoneDirectory.add(drake, "345-534-3245");
+		phoneDirectory.add(lebron, "135-534-3245");
+		phoneDirectory.add(anthony, "467-564-4332");
+		phoneDirectory.add(lamelo, "673-564-3422");
+		phoneDirectory.add(lonzo, "895-546-4356");
+		phoneDirectory.add(gelo, "768-568-6834");
+		phoneDirectory.add(victor, "586-644-5345");
+		phoneDirectory.add(jimmy, "768-658-6843");
+		phoneDirectory.add(derrick, "973-567-3436");
+		
+		System.out.println("Is the phone directory empty: " + phoneDirectory.isEmpty());
+		displayphoneDirectory(phoneDirectory);
+		System.out.println("Total Contacts " + phoneDirectory.getSize());
+		System.out.println("Is Kevin Durant in the contacts:" + 
+				phoneDirectory.contains(new Name("Kevin", "Durant")));
+		System.out.println("Is Sarim Hussain in the contacts:" + 
+							phoneDirectory.contains(sarim));
+		System.out.println("What is Sarim phone number:  " +
+							phoneDirectory.getValue(sarim));
+		System.out.println("Now I will remove victor!!! ");
+		phoneDirectory.remove(victor);
+		System.out.println("Is the phone directory empty:" + phoneDirectory.isEmpty());
+		System.out.println(" ");
+		displayphoneDirectory(phoneDirectory);
+		System.out.println("Total Contacts: " + phoneDirectory.getSize());
+		System.out.println("Now I will delte all the contacts!!!");
+		phoneDirectory.clear();
+		System.out.println("Total Contacts: " + phoneDirectory.getSize());
+		System.out.println("Is the phone directory empty:" + phoneDirectory.isEmpty());
+	}
+	private static void displayphoneDirectory(SortedLinkedDictionary<Name, String> phoneDirectory) 
+	{
+		Iterator<Name> keyIterator = phoneDirectory.getKeyIterator();
+		Iterator<String> valueIterator = phoneDirectory.getValueIterator();
+		while(keyIterator.hasNext())
+		{
+			Name fullName = keyIterator.next();
+			String phoneNo = valueIterator.next();
+			System.out.println("Contact= " + fullName +"= " +  phoneNo);
+		}
+		System.out.println(" ");
+	}
+}
