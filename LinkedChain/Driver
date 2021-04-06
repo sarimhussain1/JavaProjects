@@ -1,0 +1,50 @@
+package shussain;
+
+public class Driver 
+{
+	public static void main(String[] args) 
+	{
+		LinkedChainList <Integer> intList = new LinkedChainList<>();
+		System.out.println("Hello! this is my list!!!");
+		System.out.println(" ");
+		System.out.println("Is this List empty: " + intList.isEmpty());
+		System.out.println("Now numbers will be added to the list below:");
+		System.out.println(" ");
+		intList.add(2000);
+		intList.add(2001);
+		intList.add(2020);
+		intList.add(2005);
+		intList.add(2015);
+		intList.add(2017);
+		intList.add(2003);
+		intList.add(2010);
+		intList.add(2022);
+		intList.add(2016);
+		System.out.println("The list in Ascending order: ");
+		displayList(intList);
+		System.out.println(" ");
+		System.out.println("Is this List empty: " + intList.isEmpty());
+		System.out.println("Total numbers inisde the list:  " + intList.getLength());
+		System.out.println("Does the list have 2025: " + intList.contains(2025));
+		System.out.println("Does the list have 2030: " + intList.contains(2030));
+		System.out.println(" ");
+		System.out.println("What is the number in the 5 spot: " + intList.getEntry(5));
+		System.out.println("What is the number in the 7 spot:  " + intList.getEntry(7));
+		System.out.println("In the 10th spot, I will add 2021 !!!");
+		intList.add(10, 2021);
+		System.out.println(" ");
+		displayList(intList);
+		System.out.println(" ");
+		System.out.println("Thankyou for viewing my List!!! ");
+	}
+	
+	private static void displayList(LinkedChainList<Integer> intList)
+	{
+		@SuppressWarnings("rawtypes")
+		Comparable [] intListArray = intList.toArray();
+		for(int i = 0; i < intListArray.length; i++)
+		{
+			System.out.println((i+1) + ") " + intListArray[i]);
+		}
+	}
+}
