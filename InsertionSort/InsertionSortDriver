@@ -1,0 +1,34 @@
+package shussain;
+
+import java.util.Arrays;
+
+public class InsertionSortDriver {
+
+    public static void main(String[] args) {
+
+        InsertionSortLinkedList<Name> list = new InsertionSortLinkedList<>(); 
+        System.out.println("This is my favorite basketball players List!!! ");
+        System.out.println(" ");
+        Name namelist1=new Name("John","Wall");
+        Name namelist2=new Name("Lonzo","Ball");
+        Name namelist3=new Name("Bradley","Beal");
+        Name namelist4=new Name("Jr","Smith");
+        Name namelist5=new Name("Kevin","Porter Jr");
+        Name namelist6=new Name("Lebron","James");
+
+        list.add(namelist1);
+        list.add(namelist2);
+        list.add(namelist3);
+        list.add(namelist4);
+        list.add(namelist5);
+        list.add(namelist6);
+        
+        System.out.println("Unsorted List :");
+        System.out.println(Arrays.toString( list.toArray() ));
+        System.out.println(" ");
+        list.sort();
+        System.out.println("Sorted List :");
+        System.out.println(Arrays.toString( list.toArray() ));
+    }
+
+}
