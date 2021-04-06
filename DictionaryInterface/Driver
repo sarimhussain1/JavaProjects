@@ -1,0 +1,74 @@
+package shussain;
+
+import java.util.Iterator;
+
+public class Driver
+{
+	public static void main(String[] args) 
+	{
+		OurDictionary<Name,String> phoneDirectory  = new OurDictionary<>();
+		System.out.println("Welcome to the phone directory!!! ");
+		System.out.println(" ");
+		System.out.println("The phone phoneDirectory is empty: " + phoneDirectory.isEmpty());
+		System.out.println("New contacts have been added!!! ");
+		System.out.println(" ");
+		
+		Name sarim = new Name("Sarim", "Hussain");
+		Name lebron = new Name("Lebron", "James");
+		Name steph = new Name("Steph", "Curry");
+		Name lonzo = new Name("Lonzo", "Ball");
+		Name melo = new Name("Melo", "Ball");
+		Name jj = new Name("Jj", "Reddick");
+		Name anthony = new Name("Anthony", "Davis");
+		Name kyle = new Name("Kyle", "Kuzma");
+		Name kevin = new Name("Kevin", "Love");
+		Name derrick = new Name("Derick", "Rose");
+
+		phoneDirectory.add(sarim, "123-456-789");
+		phoneDirectory.add(lebron, "435-546-5678");
+		phoneDirectory.add(steph, "346-756-7453");
+		phoneDirectory.add(lonzo, "756-784-2456");
+		phoneDirectory.add(melo, "757-890-6578");
+		phoneDirectory.add(jj, "896-648-6840");
+		phoneDirectory.add(anthony, "915-456-4667");
+		phoneDirectory.add(kyle, "963-568-9073");
+		phoneDirectory.add(kevin, "927-678-4533");
+		phoneDirectory.add(derrick, "946-784-4567");
+		
+		System.out.println("Is the phone directory empty: " + phoneDirectory.isEmpty());
+		displayDirectory(phoneDirectory);
+		System.out.println("How many contacts: " + phoneDirectory.getSize());
+		System.out.println("Sarim is part of the contacts: " +
+							phoneDirectory.contains(sarim));
+		System.out.println("What is Sarim's phone number : " +
+							phoneDirectory.getValue(sarim));
+		System.out.println("Adin is part of the contacts: " + 
+				phoneDirectory.contains(new Name("Adin", "Ross")));
+		System.out.println("Now I will remove the contact Jj Reddick!!! ");
+		phoneDirectory.remove(jj);
+		System.out.println("The phone directory is empty: " + phoneDirectory.isEmpty());
+		System.out.println(" ");
+		displayDirectory(phoneDirectory);
+		System.out.println("How many total contacts:  " + phoneDirectory.getSize());
+		System.out.println("Now all contacts will be deleted!!! ");
+		phoneDirectory.clear();
+		System.out.println("Total contacts: " + phoneDirectory.getSize());
+		System.out.println("There are no contacts left: " + phoneDirectory.isEmpty());
+		System.out.println(" ");
+		System.out.println("Thankyou for checking the phone directory!!! ");
+
+	}
+
+	private static void displayDirectory(OurDictionary<Name, String> phoneDirectory) 
+	{
+		Iterator<Name> keyIterator = phoneDirectory.getKeyIterator();
+		Iterator<String> valueIterator = phoneDirectory.getValueIterator();
+		while(keyIterator.hasNext())
+		{
+			Name name = keyIterator.next();
+			String phoneNumber = valueIterator.next();
+			System.out.println("Contact: " + name +" = " +  phoneNumber);
+		}
+		System.out.println(" ");
+	}
+}
