@@ -1,0 +1,24 @@
+package shussain;
+
+public class SortedArraySearcher {
+	
+	public static <T extends Comparable<? super T>> boolean inSortedArrayRecursive(T[] anArray, T anEntry){	
+		return binarySearch(anArray, 0, anArray.length-1, anEntry);	
+	}
+	private static <T extends Comparable<? super T>>boolean binarySearch(T[] anArray,int first, int last,T desiredItem){
+		boolean found=false;
+		int mid=first+(last-first)/2;
+		
+		if(first>last) {
+			return found=false;
+		}
+		else if(desiredItem.equals(anArray[mid])) {
+			return found=true;
+		}
+		else if(desiredItem.compareTo(anArray[mid])<0) {
+			return binarySearch(anArray, first, mid-1, desiredItem);
+		}
+		else  
+			return binarySearch(anArray,mid+1, last,desiredItem);
+	}
+}
