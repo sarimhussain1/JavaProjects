@@ -1,0 +1,87 @@
+package shussain;
+
+public class InsertionSortLinkedList<T extends Comparable<T>> {
+
+    private Node firstNode;
+    int length;
+    public InsertionSortLinkedList() {
+        firstNode = null;
+        length = 0;
+    }
+    public void add(T newEntry) {
+        Node newNode = new Node(newEntry, firstNode);
+        firstNode = newNode;
+        length++;
+    }
+    public int getLength() {
+        return length;
+    }
+    public T[] toArray() {
+        T[] result = (T[])new Comparable[length];
+        int index = 0;
+        Node currentNode = firstNode;
+        while((index < length) && (currentNode != null)) {
+            result[index] = currentNode.getData();
+            currentNode = currentNode.getNextNode();
+            index++;
+        }
+        return result;
+    }
+    public void sort() {
+        insertionSort(firstNode);
+    }
+    private void insertionSort(Node firstNode) {
+        if(length > 1) {
+            Node unsortedPart = firstNode.getNextNode();
+            firstNode.setNextNode(null);
+
+            while(unsortedPart != null) {
+                Node nodeToInsert = unsortedPart;
+                unsortedPart = unsortedPart.getNextNode();
+                insertInOrder(nodeToInsert);
+            }
+        }
+    }
+    private void insertInOrder(Node nodeToInsert) {
+        T item = nodeToInsert.getData();
+        Node currentNode = firstNode;
+        Node previousNode = null;
+        while((currentNode != null) && (item.compareTo(currentNode.getData()) > 0)) {
+            previousNode = currentNode;
+            currentNode = currentNode.getNextNode();
+        }
+        if(previousNode != null) {
+            // insert between previous and current
+            previousNode.setNextNode(nodeToInsert);
+            nodeToInsert.setNextNode(currentNode);
+        } else {
+            // insert at beginning
+            nodeToInsert.setNextNode(firstNode);
+            firstNode = nodeToInsert;
+        }
+    }
+    private class Node {
+        private T data;
+        private Node next;
+
+        private Node(T dataPortion) {
+            this(dataPortion, null);
+        }
+        private Node(T dataPortion, Node nextNode) {
+            data = dataPortion;
+            next = nextNode;
+        }
+        private T getData() {
+            return data;
+        }
+        private void setData(T data) {
+            this.data = data;
+        }
+        private Node getNextNode() {
+            return next;
+        }
+        private void setNextNode(Node nextNode) {
+            this.next = nextNode;
+        }
+    }
+}
