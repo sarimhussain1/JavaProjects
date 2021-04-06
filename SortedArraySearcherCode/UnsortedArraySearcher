@@ -1,0 +1,29 @@
+package shussain;
+
+public class UnsortedArraySearcher<T> {
+	public static <T>boolean inUnsortedArrayIterative(T[] anArray, T anEntry){	
+		boolean found =false;
+		int index=0;
+		while(!found&&index<anArray.length) {
+			if(anEntry.equals(anArray[index])) {
+				found=true;
+			}
+			index++;
+		}
+		return found;
+	}
+	public static <T> boolean inUnsortedArrayRecursive(T[] anArray, T anEntry) {
+		return search(anArray,0,anArray.length-1, anEntry);	
+	}
+	private static <T> boolean search(T[] anArray, int first, int last, T desiredItem) {
+		boolean found=false;
+		if (first>last) {
+			return found=false;	
+		}
+		else if (desiredItem.equals(anArray[first])) {
+			return found=true;
+		}
+		else
+		return search(anArray,first+1,last, desiredItem);
+	}
+}
