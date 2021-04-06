@@ -1,0 +1,26 @@
+package shussain;
+
+public class SearchDriver <T>{
+
+	public static void main(String[] args) {
+
+		String[]NameList1= {"Anthony", "Bradley", "Carmelo", "Harden", "Russell","Steph", "Thomson","Victor","Wilson","Zion" };
+		SortedArraySearcher NameSearch= new SortedArraySearcher();
+		System.out.println("I am performing a binary search right now: ");
+		System.out.println(NameSearch.inSortedArrayRecursive(NameList1, "Harden"));
+		System.out.println(NameSearch.inSortedArrayRecursive(NameList1, "Anthony"));
+		System.out.println();
+		String[]NameList2= {"Sarim", "Ashley", "Damian", "Robert","Mike","Brianna", "Finley","Luka","Jake","Olivia"};
+		UnsortedArraySearcher<String> NameSearch2= new UnsortedArraySearcher();
+		System.out.println("Iterative search in unsorted array: ");
+		System.out.println(NameSearch2.inUnsortedArrayIterative(NameList2, "Sarim"));
+		System.out.println(NameSearch2.inUnsortedArrayIterative(NameList2, "Lebron"));
+		System.out.println();
+		System.out.println("Recursive seacrch in unsorted array: ");
+		System.out.println(NameSearch2.inUnsortedArrayRecursive(NameList2, "Brianna"));
+		System.out.println(NameSearch2.inUnsortedArrayRecursive(NameList2, "Finley"));
+		System.out.println();
+		System.out.println("Thankyou for your time!!!");
+		
+	}
+}
