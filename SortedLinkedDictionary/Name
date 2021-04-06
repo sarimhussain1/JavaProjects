@@ -1,0 +1,40 @@
+package shussain;
+
+public class Name implements Comparable<Name>
+{
+	String firstName;
+	String lastName;
+	
+	public Name(String fName, String lName)
+	{
+		this.firstName = fName;
+		this.lastName = lName;
+	}
+
+	public String getFirstName()
+	{
+		return firstName;
+	}
+
+	public String getLastName() 
+	{
+		return lastName;
+	}
+
+	public String toString()
+	{
+		return firstName + " " + lastName;
+	}
+
+	@Override
+	public int compareTo(Name o)
+	{
+		int comparedValue = firstName.compareTo(o.firstName);
+		if(comparedValue == 0)
+		{
+			comparedValue = lastName.compareTo(o.lastName);
+		}
+		return comparedValue;
+	}
+	
+}
