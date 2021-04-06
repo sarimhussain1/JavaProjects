@@ -1,0 +1,24 @@
+package shussain;
+
+public class Name
+{
+	String firstName;
+	String lastName;
+	public Name(String fName, String lName)
+	{
+		this.firstName = fName;
+		this.lastName = lName;
+	}
+	public String getFirstName()
+	{
+		return firstName;
+	}
+	public String getLastName() 
+	{
+		return lastName;
+	}
+	public String toString()
+	{
+		return firstName + " " + lastName;
+	}	
+}
