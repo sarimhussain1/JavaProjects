@@ -1,0 +1,144 @@
+package shussain;
+
+public abstract class LinkedChainBase<T>
+{
+	private Node firstNode;
+	private int numberOfEntries;
+	
+	public LinkedChainBase()
+	{
+		InitializeDataFields();
+	}
+	
+	public final void clear()
+	{
+		InitializeDataFields();
+	}
+	
+	public int getLength()
+	{
+		return numberOfEntries;
+	}
+	
+	public boolean isEmpty()
+	{
+		return numberOfEntries == 0;
+	}
+	
+	public T[] toArray()
+	{
+		@SuppressWarnings("unchecked")
+		T[] result = (T[])new Comparable[numberOfEntries];
+		int index = 0;
+	     Node currentNode = firstNode;
+	     while ((index < numberOfEntries) && (currentNode != null))
+	     {
+	        result[index] = currentNode.getData();
+	        currentNode = currentNode.getNextNode();
+	        index++;
+	     } 
+	      
+	     return result;  
+	      
+	}
+	
+	protected final Node getFirstNode()
+	{
+		return firstNode;
+	}
+	
+	protected final void addFirstNode(Node newNode)
+	{
+		newNode.setNextNode(firstNode);
+		firstNode = newNode;
+		numberOfEntries++;
+	}
+	
+	protected final void addAfterNode(Node nodeBefore, T newEntry)
+	{
+		Node newNode = new Node(newEntry);
+		Node nodeAfter = nodeBefore.getNextNode();
+		if(nodeAfter == null)
+		{
+			nodeBefore.setNextNode(newNode);
+		}
+		else
+		{
+			nodeBefore.setNextNode(newNode);
+			newNode.setNextNode(nodeAfter);
+		}
+		
+		numberOfEntries++;
+	}
+	
+	protected final void removeFirstNode()
+	{
+		firstNode = firstNode.getNextNode();
+		numberOfEntries--;
+	}
+	
+	protected final T removeAfterNode(Node nodeBefore)
+	{
+		Node nodeToRemove = nodeBefore.getNextNode();
+		Node nodeAfter = nodeToRemove.getNextNode();
+		nodeBefore.setNextNode(nodeAfter);
+		numberOfEntries--;
+		return nodeToRemove.getData();
+	}
+	
+	protected final Node getNodeAt(int givenPosition)
+	{
+		Node currentNode = firstNode;
+		for(int i = 1; i < givenPosition; i++)
+		{
+			currentNode = currentNode.getNextNode();
+		}
+		
+		return currentNode;
+	}
+	
+	protected final void InitializeDataFields()
+	{
+		firstNode = null;
+		numberOfEntries = 0;
+	}
+	
+	protected final class Node
+	{
+		private T data;
+		private Node next;
+		
+		protected Node(T dataPortion)
+		{
+			data = dataPortion;
+			next = null;
+		}
+		
+		@SuppressWarnings("unused")
+		private Node(T dataPortion, Node nextNode)
+		{
+			data = dataPortion;
+			next = nextNode;
+		}
+
+		protected T getData() 
+		{
+			return data;
+		}
+
+		protected void setData(T data) 
+		{
+			this.data = data;
+		}
+
+		protected Node getNextNode()
+		{
+			return next;
+		}
+
+		protected void setNextNode(Node next)
+		{
+			this.next = next;
+		}		
+	}
+}
